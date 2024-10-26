@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Kurd Study</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1e212e;
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* Button styling */
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-buttons a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            background-color: #293152;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .header-buttons a:hover {
+            background-color: #3a4565;
+            transform: scale(1.05);
+        }
+
+        /* Hamburger menu icon */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        /* Mobile menu with overlay and close button */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: #1e212e;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            transform: translateY(-100%);
+            transition: transform 0.5s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+        }
+
+        .mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            margin: 8px 0;
+            background-color: #293152;
+            border-radius: 20px;
+            width: 80%;
+            text-align: center;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            background-color: #3a4565;
+            transform: scale(1.05);
+        }
+
+        /* Close button */
+        .close-btn {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #d4d4d4;
+        }
+
+        /* Mobile menu visible states */
+        .mobile-menu-overlay.show,
+        .mobile-menu.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu.show {
+            transform: translateY(0);
+        }
+
+        .mobile-menu-overlay.show {
+            opacity: 1;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .header-buttons {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu,
+            .mobile-menu-overlay {
+                display: none !important;
+            }
+        }
+        /* Main content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            text-align: center;
+        }
+
+        .welcome-text {
+            font-size: 50px;
+            font-weight: bold;
+            color: #293152;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            font-family: 'Oswald', sans-serif; /* Oswald font */
+        }
+
+        .welcome-text.show {
+            opacity: 1;
+        }
+
+        .typing-text {
+            color: #1e212e;
+            font-size: 30px;
+            font-weight: 500;
+            margin-top: 10px;
+            font-family: 'Oswald', sans-serif; /* Oswald font */
+        }
+        .footer {
+            background-color: #1e212e;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            font-family: 'Oswald', sans-serif;
+        }
+        /* Donation section */
+        .donation-section {
+            display: flex;
+            flex-direction: column; /* Stack images vertically */
+            align-items: center; /* Center align images */
+            gap: 40px; /* Space between rows */
+            margin-top: 100px; /* Margin from header */
+            margin-bottom: 100px; /* Margin for bottom spacing */
+            padding: 20px; /* Added padding for better spacing */
+        }
+
+        .crypto-images {
+            display: flex;
+            justify-content: center; /* Center the images within each row */
+            gap: 40px; /* Space between images */
+        }
+
+        .crypto-image {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+            border-radius: 20px; /* Curved edges */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Shadow */
+        }
+
+        .crypto-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>Kurd Study</h1>
+
+    <div class="header-buttons">
+        <a href="index.html">Home</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
+        <a href="donation.html">Donation</a>
+    </div>
+
+    <div class="hamburger" onclick="toggleMobileMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</header>
+
+<!-- Mobile Menu and Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+    <span class="close-btn" onclick="closeMobileMenu()">×</span>
+    <a href="index.html">Home</a>
+    <a href="news.html">News</a>
+    <a href="contact.html">Contact</a>
+    <a href="donation.html">Donation</a>
+</div>
+
+<!-- Donation Section -->
+<div class="donation-section">
+    <div class="crypto-images">
+        <img src="Images/bitcoin.webp" alt="Bitcoin" class="crypto-image" id="bitcoinImage">
+        <img src="Images/usdt.jpg" alt="USDT" class="crypto-image" id="usdtImage">
+    </div>
+    <div class="crypto-images">
+        <img src="Images/eth.webp" alt="Ethereum" class="crypto-image" id="ethImage">
+        <img src="Images/doge.png" alt="Dogecoin" class="crypto-image" id="dogeImage">
+    </div>
+</div>
+
+<!-- Modal for Bitcoin QR Code -->
+<div class="modal" id="bitcoinModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('bitcoinModal')">&times;</span>
+        <h2>Donate with Bitcoin</h2>
+        <img src="Images/bitcoin-link.jpg" alt="Bitcoin QR Code">
+    </div>
+</div>
+
+<!-- Modal for USDT QR Code -->
+<div class="modal" id="usdtModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('usdtModal')">&times;</span>
+        <h2>Donate with USDT</h2>
+        <img src="Images/usdt-link.jpg" alt="USDT QR Code">
+    </div>
+</div>
+
+<!-- Modal for Ethereum QR Code -->
+<div class="modal" id="ethModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('ethModal')">&times;</span>
+        <h2>Donate with Ethereum</h2>
+        <img src="Images/eth-link.jpg" alt="Ethereum QR Code">
+    </div>
+</div>
+
+<!-- Modal for Dogecoin QR Code -->
+<div class="modal" id="dogeModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('dogeModal')">&times;</span>
+        <h2>Donate with Dogecoin</h2>
+        <img src="Images/doge-link.jpg" alt="Dogecoin QR Code">
+    </div>
+</div>
+
+<script>
+    // Show modal function
+    function showModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    // Close modal function
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Event listeners for opening modals
+    document.getElementById('bitcoinImage').addEventListener('click', function() {
+        showModal('bitcoinModal');
+    });
+
+    document.getElementById('usdtImage').addEventListener('click', function() {
+        showModal('usdtModal');
+    });
+
+    document.getElementById('ethImage').addEventListener('click', function() {
+        showModal('ethModal');
+    });
+
+    document.getElementById('dogeImage').addEventListener('click', function() {
+        showModal('dogeModal');
+    });
+</script>
+<script>
+    function toggleMobileMenu() {
+        document.getElementById('mobileMenu').classList.toggle('show');
+        document.getElementById('mobileMenuOverlay').classList.toggle('show');
+    }
+
+    function closeMobileMenu() {
+        document.getElementById('mobileMenu').classList.remove('show');
+        document.getElementById('mobileMenuOverlay').classList.remove('show');
+    }
+
+    // Hide mobile menu on window resize if larger than mobile size
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
+    });
+</script>
+<!-- Main Content -->
+
+<footer class="footer">
+    <p>&copy; <span id="currentYear"></span>2024 Kurd Study. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
